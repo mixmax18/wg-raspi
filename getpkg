@@ -1,7 +1,12 @@
 #!/bin/bash
+echo "LC_ALL=en_US.UTF-8" | sudo tee -a /etc/environment > /dev/null
+echo "en_US.UTF-8 UTF-8" | sudo tee -a /etc/locale.gen > /dev/null
+echo "LANG=en_US.UTF-8" | sudo tee /etc/locale.conf > /dev/null
+sudo locale-gen en_US.UTF-8
 echo "deb http://deb.debian.org/debian/ unstable main" | sudo tee --append /etc/apt/sources.list
 sudo apt-key adv --keyserver   keyserver.ubuntu.com --recv-keys 04EE7237B7D453EC
 sudo apt-key adv --keyserver   keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
 sudo sh -c 'printf "Package: *\nPin: release a=unstable\nPin-Priority: 90\n" > /etc/apt/preferences.d/limit-unstable'
 sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y
 sudo apt install wireguard dnsmasq -y
+sudo reboot
